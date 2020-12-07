@@ -23,17 +23,17 @@
         floatThead: '=?',
         floatTheadEnabled: '=?'
       },
-      controller: function ($scope, $element, $attrs) {
+      controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
         // default float-thead-enabled to true if not present
         if (!$attrs.hasOwnProperty('floatTheadEnabled')) {
           $scope.floatTheadEnabled = $attrs.floatTheadEnabled = true;
         }
-        
+
         // default to empty object
         if (!$attrs.hasOwnProperty('floatThead') || $attrs.floatThead === '') {
           $scope.floatThead = $attrs.floatThead = {};
         }
-      },
+      }],
       link: link,
       restrict: 'A'
     };
@@ -49,12 +49,12 @@
           jQuery($element).floatThead('destroy');
         }
       });
-      
+
       $scope.$watch('floatThead', function (newVal, oldVal) {
         if (newVal === oldVal || !$scope.floatTheadEnabled) {
           return;
         }
-        
+
         // first destroy it so we can recreate with new options
         jQuery($element).floatThead('destroy');
         if (angular.isObject(newVal)) {
